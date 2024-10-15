@@ -7,7 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, UpdateUserSerializer
 from .models import User
 from django.db import IntegrityError
-from .utils import send_user_action_email
+from .utils import send_user_notification_email
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import get_user_model
 
@@ -21,7 +21,7 @@ class RegisterView(APIView):
                 #Sending the welcome email
                 subject = "Welcome to Aquaverse!"
                 message = f"Hello Mr {user.firstname}, thank you for joining the Aquaverse family"
-                send_user_action_email(subject, message, user.email)
+                send_user_notification_email(subject, message, user.email)
 
                 return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
             except IntegrityError:
@@ -56,7 +56,7 @@ class UpdateUserView(APIView):
             #Sending profile update email
             subject = "Profile Updated Successfully"
             message = f"Hello {instance.firstname}, your account details have been successfully updated"
-            send_user_action_email(subject, message, instance.email)
+            send_user_notification_email(subject, message, instance.email)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

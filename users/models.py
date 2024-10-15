@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.conf import settings
 
@@ -29,7 +29,7 @@ class UserManager(BaseUserManager):
         return user
 
 #Create user table with fields
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     firstname = models.CharField(verbose_name = 'First Name', max_length=50)
     lastname = models.CharField(verbose_name= 'Last Name', max_length=50)
     username = models.CharField(verbose_name= 'Preferred Name', max_length=8, unique=True)

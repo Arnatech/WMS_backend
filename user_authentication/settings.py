@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'aquaverse122@gmail.com'
-EMAIL_HOST_PASSWORD = 'drbhzmanplqprjbw'
+EMAIL_HOST_PASSWORD = os.getenv('HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -43,6 +43,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'users',
+    'orders',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -186,3 +188,20 @@ LOGOUT_REDIRECT_URL = '/'
 SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY:
     raise ImproperlyConfigured("Put the secret key in the setting.py DUMMY!")
+
+JAZZMIN_SETTINGS = {
+    "site_title": "My Custom Admin",
+    "site_header": "My Project Admin",
+    "welcome_sign": "Welcome to the Admin Panel",
+    "show_ui_builder": True,  # Show the UI Builder on the sidebar
+    "theme": "litera",  # You can select from various Bootstrap themes
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        # Other links can be added here
+    ],
+    # Colors and other styles
+    "site_brand": {
+        "title": "Aquaverse Admin",
+        "background_color": "#4a90e2",  # Set a custom color
+    },
+}
