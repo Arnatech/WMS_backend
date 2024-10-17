@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
@@ -62,6 +65,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.instagram',
     'dj_rest_auth.registration',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 SITE_ID = 1
@@ -118,6 +123,22 @@ DATABASES = {
     }
 }
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dgbjrtmzg',
+    'API_KEY': os.getenv('API_KEY'),
+    'API_SECRET': os.getenv('API_SECRET'),
+}
+
+cloudinary.config(
+  cloud_name = 'dgbjrtmzg',
+  api_key = os.getenv('API_KEY'),
+  api_secret = os.getenv('API_SECRET')
+)
+
+
+CLOUDINARY_URL = 'cloudinary://<api_key>:<api_secret>@<cloud_name>'
+# Add cloudinary storage backend
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
